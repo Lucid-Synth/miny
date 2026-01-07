@@ -1,7 +1,13 @@
 import {motion} from 'framer-motion'
 import { ArrowRight, Zap, Shield,BarChart3} from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 export function Hero(){
+    const navigate = useNavigate()
+
+    const handleSignin = () => {
+      navigate('/signin')
+    }
     return(
             <main className="container mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
@@ -23,7 +29,7 @@ export function Hero(){
             transition={{ delay: 0.2 }}
             className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto"
           >
-            Transform long, complex URLs into clean, shareable links. Track clicks, analyze engagement, and manage all your links in one place.
+            Transform long, complex URLs into clean, shareable links. Track and manage all your links in one place.
           </motion.p>
 
           {/* start button */}
@@ -37,6 +43,7 @@ export function Hero(){
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-10 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg flex items-center gap-2 mx-auto shadow-lg"
+              onClick={handleSignin}
             >
               Get Started
               <ArrowRight className="w-5 h-5" />
@@ -59,7 +66,7 @@ export function Hero(){
               {
                 icon: BarChart3,
                 title: 'Detailed Analytics',
-                description: 'Track clicks, locations, and devices with comprehensive insights'
+                description: 'Track locations and devices with comprehensive insights'
               }
             ].map((feature, index) => (
               <motion.div

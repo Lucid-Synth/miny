@@ -1,7 +1,14 @@
 import { motion } from 'framer-motion';
-import { Link2 } from 'lucide-react';
+import { Link2,ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function Header(){
+const navigate = useNavigate()
+
+const handleSignin = () => {
+  navigate('/signin')
+}
+
     return(
         <>
         <motion.header 
@@ -17,9 +24,11 @@ export function Header(){
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium flex items-center gap-2"
+            onClick={handleSignin}
           >
             Sign in
+            <ArrowRight className="w-5 h-5" />
           </motion.button>
         </div>
       </motion.header>
