@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import { Link2, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -10,6 +11,11 @@ export default function SignIn() {
   const handleSignIn = () => {
     console.log('Sign in:', { email, password });
   };
+
+  const navigate = useNavigate()
+  function handleSignup(){
+    navigate('/signup')
+  }
 
   return (
     <>
@@ -90,7 +96,8 @@ export default function SignIn() {
           {/* Sign Up Link */}
           <p className="text-center text-slate-600 mt-6">
             Don't have an account?{' '}
-            <button className="text-blue-600 hover:text-blue-700 font-semibold">
+            <button className="text-blue-600 hover:text-blue-700 font-semibold"
+            onClick={handleSignup}>
               Sign up
             </button>
           </p>
