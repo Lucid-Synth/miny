@@ -17,11 +17,14 @@ export const getUserById = (id:number) => {
 }
 
 //Fuction to get user by email
-export const getUserByEmail = (email: string) => {
-    return db
+export const getUserByEmail = async(email: string) => {
+    const result = await db
     .select()
     .from(user)
-    .where(eq(user.email,email))
+    .where(eq(user.email, email))
+    .limit(1);
+
+  return result[0] ?? null;
 }
 
 //Function to get all urls
