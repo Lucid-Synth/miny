@@ -6,6 +6,10 @@ const PORT = process.env.PORT || 'your-server-port';
 
 const app = express();
 
+app.use(express.json())
+
+
+
 app.get('/',(req:any,res:any) => {
     res.json({
         message: "This is miny's api"
