@@ -9,22 +9,13 @@ export interface AuthRequest extends Request {
   };
 }
 
-export const authMiddleware = (
+export const Middleware = (
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization;
+  const token = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({
-      message: "Authorization token missing",
-    });
-  }
-
-  const token = authHeader.split(" ")[1];
-
-  // ✅ Type guard — token is now string
   if (!token) {
     return res.status(401).json({
       message: "Authorization token missing",

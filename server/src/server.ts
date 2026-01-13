@@ -1,5 +1,6 @@
-import express from 'express'
-import authRoutes from './routes/authRoute.js'
+import express, { type Request, type Response } from 'express';
+import authRoutes from './routes/authRoute.js';
+import urlRoutes from './routes/urlRoutes.js'
 import { configDotenv } from 'dotenv';
 configDotenv();
 
@@ -7,11 +8,12 @@ const PORT = process.env.PORT || 'your-server-port';
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
-app.use('/',authRoutes)
+app.use('/',authRoutes);
+app.use('/',urlRoutes);
 
-app.get('/',(req:any,res:any) => {
+app.get('/',(req:Request,res:Response) => {
     res.json({
         message: "This is miny's api"
     });

@@ -35,11 +35,14 @@ export const getAllUrls = () => {
 }
 
 //Function to get url by short code
-export const getUrlbyShortcode = (shortCode:string) => {
-    return db
+export const getUrlbyShortcode = async(shortCode:string) => {
+    const result = await db
     .select()
     .from(url)
     .where(eq(url.short_code,shortCode))
+    .limit(1)
+
+    return result[0] ?? null
 }
 
 
