@@ -2,15 +2,41 @@ import  { useState } from 'react';
 import { Cable, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Base_url } from '../config/config';
+import Loader from '../animations/loader';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
-  const handleSignIn = () => {
-    console.log('Sign in:', { email, password });
-  };
+const handleSignIn = async () => {
+  try {
+    const res = await axios.post(Base_url + "/signin", {
+      email,
+      password,
+    });
+
+    const { token, message } = res.data;
+
+    localStorage.setItem("token", token);
+    setSignedIn(true);
+
+    console.log(message);
+    console.log("JWT Token:", token);
+
+    setTimeout(() => {
+      navigate('/url')
+    }, 3500);
+  } catch (error:any) {
+    console.error(
+      "Sign in failed:",
+      error.response?.data?.message || error.message
+    );
+  }
+};
 
   const navigate = useNavigate()
   function handleSignup(){
@@ -91,6 +117,12 @@ export default function SignIn() {
             >
               Sign In
             </motion.button>
+            {signedIn && (
+              <div>
+                <Loader />
+              </div>
+            )}
+
           </div>
 
           {/* Sign Up Link */}
