@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { Cable, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Base_url } from '../config/config';
+import Loader from '../animations/loader';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -9,6 +12,7 @@ export default function SignUp() {
     email: '',
     password: '',
   });
+  const [signedUp,setSignedUp] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (field:any, value:any) => {
@@ -17,11 +21,22 @@ export default function SignUp() {
 
   const handleSignUp = () => {
     console.log('Sign up:', formData);
+
+    axios.post(Base_url+"/signup",formData)
+    .then(() => {
+      setSignedUp(true)
+    })
+    .then(() => {
+      setTimeout(() => {
+        navigate('/signin')
+      }, 3500);
+    })
   };
 
-  const navigte = useNavigate()
+
+  const navigate = useNavigate()
   function handleSignin(){
-    navigte('/signin')
+    navigate('/signin')
   }
 
   return (
@@ -134,6 +149,12 @@ export default function SignUp() {
             >
               Create Account
             </motion.button>
+
+            {signedUp && (
+              <div>
+                <Loader /> You have signed Up.
+              </div>
+            )}
 
             {/* Divider */}
             <div className="relative my-6">
