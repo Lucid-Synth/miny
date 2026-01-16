@@ -1,14 +1,37 @@
 import  { useState } from 'react';
 import { Cable, Copy, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+import { Base_url } from '../config/config';
+
 
 export default function URLShortener() {
   const [url, setUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
 
-  const handleShorten = () => {
-    if (url) {
-      setShortUrl('mi-ny.onrender.com/xyzz');
+  const handleShorten = async() => {
+    try{
+      const token = localStorage.getItem("token");
+
+      const res = await axios.post(Base_url + "/shorten", {url},
+        {
+          headers:{
+            Authorization: token,
+            "Content-Type":"application/json"
+          }
+        }
+      );
+
+      const { shorturl } = res.data;
+      
+      if(!shorturl){
+        throw new Error("Short URL has not been recieved from server");
+      }
+
+      setShortUrl(shorturl)
+    }
+    catch(error){
+      console.error(error)
     }
   };
 
@@ -18,7 +41,7 @@ export default function URLShortener() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center px-6">
-      <div className="w-full max-w-2xl">
+      <div className="w-[30%] max-w-2xl">
         {/* Logo */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
@@ -89,7 +112,7 @@ export default function URLShortener() {
                 <motion.a
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  href={`https://${shortUrl}`}
+                  href={shortUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
