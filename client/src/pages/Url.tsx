@@ -41,7 +41,7 @@ export default function URLShortener() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center px-6">
-      <div className="w-[30%] max-w-2xl">
+      <div className="w-full max-w-2xl">
         {/* Logo */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
